@@ -1,0 +1,14 @@
+void ordenarPorFecha(Nodo** lista) {
+	if (*lista == NULL || (*lista)->siguiente == NULL) return;
+	Nodo *i, *j;
+	for(i = *lista; i != NULL; i = i->siguiente) {
+		for(j = i->siguiente; j != NULL; j = j->siguiente) {
+			if(strcmp(i->dato.fecha, j->dato.fecha) > 0) {
+				Reclamo temp = i->dato;
+				i->dato = j->dato;
+				j->dato = temp;
+			}
+		}
+	}
+	printf("Reclamos ordenados por fecha.\n");
+}
