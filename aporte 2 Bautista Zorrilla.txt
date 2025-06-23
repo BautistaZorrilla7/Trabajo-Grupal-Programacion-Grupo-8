@@ -1,0 +1,49 @@
+void guardarEnArchivo(const char* nombreArchivo, Nodo* lista) {
+	FILE* f = fopen(nombreArchivo, "w");
+	if (!f) {
+		printf("No se pudo abrir el archivo para guardar.\n");
+		return;
+	}
+
+	fprintf(f, "| %-3s | %-20s | %-25s | %-15s | %-10s | %-12s |\n", 
+			"Nº", "Nombre", "Direccion", "Tipo", "Fecha", "Estado");
+	fprintf(f, "|%s|\n", "-----|----------------------|---------------------------|-----------------|------------|--------------");
+
+	int i = 1;
+	while(lista != NULL) {
+		Reclamo r = lista->dato;
+		fprintf(f, "| %-3d | %-20s | %-25s | %-15s | %-10s | %-12s |\n", 
+				i++, r.nombre, r.direccion, r.tipo, r.fecha, r.estado);
+		lista = lista->siguiente;
+	}
+	fclose(f);
+	printf("Reclamos guardados en formato tabla en: %s\n", nombreArchivo);
+}
+
+Nodo* cargarDesdeArchivo(const char* nombreArchivo) {
+	FILE* f = fopen(nombreArchivo, "r");
+	if (!f) return NULL;
+
+	char buffer[256];
+	Nodo* lista = NULL;
+
+	fgets(buffer, sizeof(buffer), f);
+	fgets(buffer, sizeof(buffer), f);
+
+	Reclamo r;
+	while (fgets(buffer, sizeof(buffer), f)) {
+		sscanf(buffer, "| %*d | %49[^|]| %99[^|]| %49[^|]| %14[^|]| %19[^|]|",
+			   r.nombre, r.direccion, r.tipo, r.fecha, r.estado);
+
+		strtok(r.nombre, "\n"); strtok(r.direccion, "\n");
+		strtok(r.tipo, "\n"); strtok(r.fecha, "\n"); strtok(r.estado, "\n");
+
+		Nodo* nuevo = (Nodo*)malloc(sizeof(Nodo));
+		nuevo->dato = r;
+		nuevo->siguiente = lista;
+		lista = nuevo;
+	}
+
+	fclose(f);
+	return lista;
+}
