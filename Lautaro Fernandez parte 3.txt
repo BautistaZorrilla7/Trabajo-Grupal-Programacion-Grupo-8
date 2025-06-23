@@ -1,0 +1,23 @@
+void cambiarEstado(Nodo* lista) {
+	char nombre[50];
+	printf("Ingrese nombre del reclamo a modificar: ");
+	fgets(nombre, 50, stdin); strtok(nombre, "\n");
+	while(lista != NULL) {
+		if(strcmp(lista->dato.nombre, nombre) == 0) {
+			printf("Nuevo estado (Pendiente / En proceso / Resuelto): ");
+			fgets(lista->dato.estado, 20, stdin); strtok(lista->dato.estado, "\n");
+			printf("Estado actualizado con exito.\n");
+			return;
+		}
+		lista = lista->siguiente;
+	}
+	printf("Reclamo no encontrado.\n");
+}
+
+void aMinusculas(char* str) {
+	for (int i = 0; str[i]; i++) {
+		if (str[i] >= 'A' && str[i] <= 'Z') {
+			str[i] += 32;
+		}
+	}
+}
