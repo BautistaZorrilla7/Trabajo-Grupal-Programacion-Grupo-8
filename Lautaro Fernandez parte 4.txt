@@ -1,0 +1,7 @@
+void liberarLista(Nodo* lista) {
+	while(lista != NULL) {
+		Nodo* temp = lista;
+		lista = lista->siguiente;
+		free(temp);
+	}
+}
