@@ -1,0 +1,13 @@
+void agregarReclamo(Nodo** lista) {
+	Reclamo nuevo;
+	printf("Nombre: "); fgets(nuevo.nombre, 50, stdin); strtok(nuevo.nombre, "\n");
+	printf("Direccion: "); fgets(nuevo.direccion, 100, stdin); strtok(nuevo.direccion, "\n");
+	printf("Tipo de reclamo: "); fgets(nuevo.tipo, 50, stdin); strtok(nuevo.tipo, "\n");
+	printf("Fecha (dd/mm/aaaa): "); fgets(nuevo.fecha, 15, stdin); strtok(nuevo.fecha, "\n");
+	strcpy(nuevo.estado, "Pendiente");
+	
+	Nodo* nodoNuevo = (Nodo*)malloc(sizeof(Nodo));
+	nodoNuevo->dato = nuevo;
+	nodoNuevo->siguiente = *lista;
+	*lista = nodoNuevo;
+}
