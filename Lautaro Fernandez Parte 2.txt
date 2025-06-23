@@ -1,0 +1,55 @@
+void mostrarReclamos(Nodo* lista) {
+	if (lista == NULL) {
+		printf("No hay reclamos para mostrar.\n");
+		return;
+	}
+
+	printf("\n| %-3s | %-20s | %-25s | %-15s | %-10s | %-12s |\n", 
+		   "Nº", "Nombre", "Dirección", "Tipo", "Fecha", "Estado");
+	printf("|%s|\n", "-----|----------------------|---------------------------|-----------------|------------|--------------");
+
+	int i = 1;
+	while(lista != NULL) {
+		Reclamo r = lista->dato;
+		printf("| %-3d | %-20s | %-25s | %-15s | %-10s | %-12s |\n", 
+			   i++, r.nombre, r.direccion, r.tipo, r.fecha, r.estado);
+		lista = lista->siguiente;
+	}
+}
+
+void buscarReclamo(Nodo* lista) {
+	char criterio[50], criterioMin[50], campoMin[50];
+	int opcion;
+
+	printf("\nBuscar por: 1.Nombre  2.Tipo  3.Estado: ");
+	scanf("%d", &opcion); getchar();
+	printf("Ingrese criterio de busqueda: ");
+	fgets(criterio, 50, stdin); strtok(criterio, "\n");
+
+	strcpy(criterioMin, criterio);
+	aMinusculas(criterioMin);
+
+	int encontrados = 0;
+
+	while(lista != NULL) {
+		Reclamo r = lista->dato;
+
+		if (opcion == 1) strcpy(campoMin, r.nombre);
+		else if (opcion == 2) strcpy(campoMin, r.tipo);
+		else if (opcion == 3) strcpy(campoMin, r.estado);
+		else break;
+
+		aMinusculas(campoMin);
+
+		if (strcmp(campoMin, criterioMin) == 0) {
+			printf("\nNombre: %s\nDireccion: %s\nTipo: %s\nFecha: %s\nEstado: %s\n",
+				   r.nombre, r.direccion, r.tipo, r.fecha, r.estado);
+			encontrados++;
+		}
+		lista = lista->siguiente;
+	}
+
+	if (encontrados == 0) {
+		printf("No se encontraron resultados que coincidan.\n");
+	}
+}
