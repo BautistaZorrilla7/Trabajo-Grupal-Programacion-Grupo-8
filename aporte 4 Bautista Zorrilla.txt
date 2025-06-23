@@ -1,0 +1,33 @@
+void menuPrincipal() {
+	Nodo* lista = cargarDesdeArchivo(ARCHIVO_RECLAMOS);
+	int opcion;
+	do {
+		printf("\n--- Gestion de Reclamos Vecinales ---\n");
+		printf("\n1. Agregar Reclamo\n");
+		printf("2. Mostrar Reclamos\n");
+		printf("3. Buscar Reclamo\n");
+		printf("4. Cambiar Estado de Reclamo\n");
+		printf("5. Ordenar por Fecha\n");
+		printf("6. Guardar y Salir\n");
+		printf("Seleccione una opcion: ");
+		scanf("%d", &opcion);
+		getchar(); // limpiar buffer
+		
+		switch(opcion) {
+		case 1: agregarReclamo(&lista); break;
+		case 2: mostrarReclamos(lista); break;
+		case 3: buscarReclamo(lista); break;
+		case 4: cambiarEstado(lista); break;
+		case 5: ordenarPorFecha(&lista); break;
+		case 6: guardarEnArchivo(ARCHIVO_RECLAMOS, lista); break;
+		default: printf("Opcion invalida\n");
+		}
+	} while(opcion != 6);
+	
+	liberarLista(lista);
+}
+
+int main() {
+	menuPrincipal();
+	return 0;
+}
