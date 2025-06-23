@@ -1,0 +1,26 @@
+typedef struct {
+	char nombre[50];
+	char direccion[100];
+	char tipo[50];
+	char fecha[15];
+	char estado[20]; // "Pendiente", "En proceso", "Resuelto"
+} Reclamo;
+
+typedef struct Nodo {
+	Reclamo dato;
+	struct Nodo* siguiente;
+} Nodo;
+
+const char* ARCHIVO_RECLAMOS = "C:\\TP_Reclamos\\reclamos.txt";
+
+// Prototipos
+void menuPrincipal();
+Nodo* cargarDesdeArchivo(const char* nombreArchivo);
+void guardarEnArchivo(const char* nombreArchivo, Nodo* lista);
+void agregarReclamo(Nodo** lista);
+void mostrarReclamos(Nodo* lista);
+void buscarReclamo(Nodo* lista);
+void ordenarPorFecha(Nodo** lista);
+void cambiarEstado(Nodo* lista);
+void liberarLista(Nodo* lista);
+void aMinusculas(char* str);
